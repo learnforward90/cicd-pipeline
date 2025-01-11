@@ -16,7 +16,7 @@ pipeline {
 
     stage('docker build') {
       steps {
-        sh 'docker build -t abaidalinov/epam-ci-cd'
+        sh 'docker image build -t abaidalinov/epam-ci-cd'
         sh 'docker --version'
       }
     }
