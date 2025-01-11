@@ -16,7 +16,7 @@ pipeline {
 
     stage('docker build') {
       steps {
-        sh 'docker build -t baidalinovimage .'
+        sh 'docker build -t abaidalinov/ci-cd-epam .'
       }
     }
 
