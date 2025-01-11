@@ -1,9 +1,21 @@
 pipeline {
   agent any
   stages {
-    stage('build') {
+    stage('pre-build') {
       steps {
-        sh 'script scripts/build.sh'
+        echo 'this is pre-build'
+      }
+    }
+
+    stage('builf') {
+      steps {
+        echo 'build'
+      }
+    }
+
+    stage('deploy') {
+      steps {
+        echo 'this is deploy'
       }
     }
 
