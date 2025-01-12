@@ -1,17 +1,23 @@
 pipeline {
   agent any
   stages {
+    stage('checkout') {
+      steps {
+        sh 'checkout scm'
+      }
+    }
+
     stage('build') {
       steps {
-        sh 'chmod +x ./scripts/build.sh'
+        sh '''chmod +x ./scripts/build.sh
+'''
         sh 'scripts/build.sh'
       }
     }
 
     stage('test') {
       steps {
-        sh '''chmod +x ./scripts/test.sh
-'''
+        sh 'chmod +x ./scripts/test.sh'
         sh 'scripts/test.sh'
       }
     }
@@ -25,7 +31,7 @@ pipeline {
       }
     }
 
-    stage('docker push') {
+    stage('docker push ') {
       steps {
         script {
           docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_creds_id')
