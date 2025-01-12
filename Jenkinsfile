@@ -10,21 +10,26 @@ pipeline {
 
     stage('test') {
       steps {
+        sh '''chmod +x ./scripts/test.sh
+'''
         sh 'scripts/test.sh'
       }
     }
 
     stage('docker build') {
       steps {
-        sh 'docker build -t abaidalinov/ci-cd-epam .'
+        script {
+          app = docker.build "${env.DOCKER_IMAGE_TAG}"
+        }
+
       }
     }
 
     stage('docker push') {
       steps {
         script {
-          docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_creds_id') {
-            def app = docker.image('abaidalinov/ci-cd-epam')
+          docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_creds_id')
+          {
             app.push("${env.BUILD_NUMBER}")
             app.push('latest')
           }
@@ -33,5 +38,8 @@ pipeline {
       }
     }
 
+  }
+  environment {
+    DOCKER_IMAGE_TAG = 'abaidalinov/ci-cd-epam'
   }
 }
