@@ -16,16 +16,16 @@ pipeline {
 
     stage('docker build') {
       steps {
-        sh 'docker build -t abaidalinov/ci-cd-epam .'
+        sh 'docker build -t abaidalinov/ci-cd-epam:${env.BUILD_NUMBER} .'
       }
     }
 
     stage('docker push') {
       steps {
         script {
-          docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_creds_id')
-          {
-            docker.image("abaidalinov/ci-cd-epam:$env.BUILD_NUMBER").push("latest")
+          docker.withRegistry('https://registry.hub.docker.com', 'docker_hub_creds_id') {
+            docker.image("abaidalinov/ci-cd-epam:${env.BUILD_NUMBER}").push()
+            docker.image("abaidalinov/ci-cd-epam:${env.BUILD_NUMBER}").push("latest")
           }
         }
 
