@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('checkout') {
       steps {
-        sh 'checkout scm'
+        git(url: 'https://github.com/learnforward90/cicd-pipeline', branch: 'main')
       }
     }
 
